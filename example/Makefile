@@ -1,7 +1,7 @@
 CFLAGS = -I./inc -I../inc -I./tinycrypt-1.1.0/include \
 		 -I./fastlz-1.0.1 -I./quicklz-1.0.1
 
-CC = gcc
+CC = gcc -std=gnu99
 OBJDIR = ./build
 
 .PHONY: clean
