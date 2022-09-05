@@ -33,35 +33,35 @@ extern "C" {
 #define AGILE_UPGRADE_NAME_NULL "UNKNOWN"
 
 #ifdef AGILE_UPGRADE_ENABLE_LOG
-#ifndef LOG_PRINTF
-#define LOG_PRINTF(...)
-#endif /* LOG_PRINTF */
-#define LOG_D(...)                     \
-    do {                               \
-        LOG_PRINTF("\033[0m[D/AUG] "); \
-        LOG_PRINTF(__VA_ARGS__);       \
-        LOG_PRINTF("\033[0m\n");       \
+#ifndef AGILE_UPGRADE_LOG_PRINTF
+#define AGILE_UPGRADE_LOG_PRINTF(...)
+#endif /* AGILE_UPGRADE_LOG_PRINTF */
+#define LOG_D(...)                                   \
+    do {                                             \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m[D/AUG] "); \
+        AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);       \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");       \
     } while (0)
 
-#define LOG_I(...)                      \
-    do {                                \
-        LOG_PRINTF("\033[32m[I/AUG] "); \
-        LOG_PRINTF(__VA_ARGS__);        \
-        LOG_PRINTF("\033[0m\n");        \
+#define LOG_I(...)                                    \
+    do {                                              \
+        AGILE_UPGRADE_LOG_PRINTF("\033[32m[I/AUG] "); \
+        AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);        \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");        \
     } while (0)
 
-#define LOG_W(...)                      \
-    do {                                \
-        LOG_PRINTF("\033[33m[W/AUG] "); \
-        LOG_PRINTF(__VA_ARGS__);        \
-        LOG_PRINTF("\033[0m\n");        \
+#define LOG_W(...)                                    \
+    do {                                              \
+        AGILE_UPGRADE_LOG_PRINTF("\033[33m[W/AUG] "); \
+        AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);        \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");        \
     } while (0)
 
-#define LOG_E(...)                      \
-    do {                                \
-        LOG_PRINTF("\033[31m[E/AUG] "); \
-        LOG_PRINTF(__VA_ARGS__);        \
-        LOG_PRINTF("\033[0m\n");        \
+#define LOG_E(...)                                    \
+    do {                                              \
+        AGILE_UPGRADE_LOG_PRINTF("\033[31m[E/AUG] "); \
+        AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);        \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");        \
     } while (0)
 #else
 #define LOG_D(...)

@@ -11,7 +11,7 @@ extern "C" {
 #include <stdio.h>
 
 #define AGILE_UPGRADE_ENABLE_LOG
-#define LOG_PRINTF printf
+#define AGILE_UPGRADE_LOG_PRINTF printf
 #define AGILE_UPGRADE_USING_CRC_TAB_CONST
 
 #define AGILE_UPGRADE_ENABLE_AES
