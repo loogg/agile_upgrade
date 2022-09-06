@@ -11,11 +11,9 @@ extern const struct agile_upgrade_ops agile_upgrade_file_ops;
 static uint32_t _written_len = 0;
 static uint32_t _total_len = 0;
 
-static void step_hook(agile_upgrade_step_t step) { printf("step: %d\r\n", step); }
+static void step_hook(int step) { printf("step: %d\r\n", step); }
 
-static void error_hook(agile_upgrade_step_t step, agile_upgrade_err_t code) {
-    printf("step: %d, err: %d\r\n", step, code);
-}
+static void error_hook(int step, int code) { printf("step: %d, err: %d\r\n", step, code); }
 
 static void progress_hook(uint32_t cur_size, uint32_t total_size) {
     _written_len = cur_size;

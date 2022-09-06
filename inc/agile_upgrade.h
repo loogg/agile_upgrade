@@ -83,9 +83,9 @@ struct agile_upgrade {
     const void *ops_data;
 };
 
-typedef void (*agile_upgrade_step_callback_t)(agile_upgrade_step_t step);
+typedef void (*agile_upgrade_step_callback_t)(int step);
 typedef void (*agile_upgrade_progress_callback_t)(uint32_t cur_size, uint32_t total_size);
-typedef void (*agile_upgrade_error_callback_t)(agile_upgrade_step_t step, agile_upgrade_err_t code);
+typedef void (*agile_upgrade_error_callback_t)(int step, int code);
 
 void agile_upgrade_set_step_hook(agile_upgrade_step_callback_t hook);
 void agile_upgrade_set_progress_hook(agile_upgrade_progress_callback_t hook);
