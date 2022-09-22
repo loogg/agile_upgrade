@@ -34,6 +34,7 @@ Agile Upgrade: 用于快速构建 bootloader 的中间件。
 | inc  | 头文件 |
 | porting | 移植文件 |
 | src  | 源代码 |
+| tools  | 固件打包工具 |
 
 ### 1.3、许可证
 
@@ -45,7 +46,7 @@ Agile Upgrade 遵循 `Apache-2.0` 许可，详见 `LICENSE` 文件。
 
 Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中的配置可以设置库的基本行为，禁用未使用的模块和特性，在编译时调整内存缓冲区的大小等等。
 
-`porting` 文件夹下提供了配置文件模板 `agile_upgrade_conf_template.h`，复制它并重命名为 `agile_upgrade_config.h` 并在工程中包含路劲即可。
+`porting` 文件夹下提供了配置文件模板 `agile_upgrade_conf_template.h`，复制它并重命名为 `agile_upgrade_config.h` 并在工程中包含路径即可。
 
 #### 基本配置
 
@@ -265,27 +266,53 @@ int main(void) {
 
 3. 设置钩子函数
 
-    - `agile_upgrade_set_step_hook`
+    固件解析按步骤执行，每一步执行前会调用步骤钩子函数；异常时会调用异常钩子函数；每解析一包数据会调用进度钩子函数。
 
-      设置处理步骤钩子函数
+    - 步骤枚举
 
       ```C
+      typedef enum {
+      AGILE_UPGRADE_STEP_INIT = 0,
+      AGILE_UPGRADE_STEP_VERIFY,
+      AGILE_UPGRADE_STEP_ALGO,
+      AGILE_UPGRADE_STEP_UPGRADE,
+      AGILE_UPGRADE_STEP_FINISH
+      } agile_upgrade_step_t;
+      ```
+
+    - 错误码枚举
+
+      ```C
+      typedef enum {
+      AGILE_UPGRADE_EOK = 0,
+      AGILE_UPGRADE_ERR = -1,
+      AGILE_UPGRADE_EVERIFY = -2,
+      AGILE_UPGRADE_EFULL = -3,
+      AGILE_UPGRADE_EREAD = -4,
+      AGILE_UPGRADE_EWRITE = -5,
+      AGILE_UPGRADE_EERASE = -6,
+      AGILE_UPGRADE_EINVAL = -7
+      } agile_upgrade_err_t;
+      ```
+
+    - 设置步骤钩子函数
+
+      ```C
+      void agile_upgrade_set_step_hook(agile_upgrade_step_callback_t hook);
       typedef void (*agile_upgrade_step_callback_t)(int step);
       ```
 
-    - `agile_upgrade_set_progress_hook`
-
-      设置升级进度钩子函数
+    - 设置进度钩子函数
 
       ```C
+      void agile_upgrade_set_progress_hook(agile_upgrade_progress_callback_t hook);
       typedef void (*agile_upgrade_progress_callback_t)(uint32_t cur_size, uint32_t total_size);
       ```
 
-    - `agile_upgrade_set_error_hook`
-
-      设置错误钩子函数
+    - 设置错误钩子函数
 
       ```C
+      void agile_upgrade_set_error_hook(agile_upgrade_error_callback_t hook);
       typedef void (*agile_upgrade_error_callback_t)(int step, int code);
       ```
 
