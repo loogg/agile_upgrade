@@ -6,7 +6,7 @@ Agile Upgrade: 用于快速构建 bootloader 的中间件。
 
 - `example` 文件夹提供 PC 上的示例
 
-- MCU 上的示例查看 [mcu_demos](https://github.com/loogg/agile_upgrade_mcu_demos)
+- MCU 上的示例查看 [MCU Demos](https://github.com/loogg/agile_upgrade_mcu_demos)
 
 ### 1.1、特性
 
@@ -127,6 +127,8 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 ### 2.2、后端适配
 
 原生适配 `file` 及 `fal` 操作接口，自定义后端只需要实现 `agile_upgrade_ops` 接口即可。可以参考 [adapter](./adapter) 中后端的实现。
+
+[MCU Demos](https://github.com/loogg/agile_upgrade_mcu_demos) 的 `MinimalistBoot` 示例提供了直接操作 `片内 Flash` 和 `SPI Flash` 后端实现，可作为参考。
 
 ```C
 struct agile_upgrade_ops {
