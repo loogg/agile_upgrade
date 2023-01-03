@@ -2,7 +2,7 @@
  * @file    agile_upgrade_file.c
  * @brief   Agile Upgrade 软件包 file 适配源文件
  * @author  马龙伟 (2544047213@qq.com)
- * @date    2022-08-30
+ * @date    2023-01-03
  *
  * @attention
  *
@@ -14,6 +14,7 @@
 #include "agile_upgrade.h"
 #include "agile_upgrade_def.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifdef AGILE_UPGRADE_ENABLE_FILE
 
