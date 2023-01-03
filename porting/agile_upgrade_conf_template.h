@@ -2,7 +2,7 @@
  * @file    agile_upgrade_conf_template.h
  * @brief   Agile Upgrade 软件包配置头文件
  * @author  马龙伟 (2544047213@qq.com)
- * @date    2022-08-29
+ * @date    2023-01-03
  *
  * @attention
  *
@@ -20,7 +20,6 @@ extern "C" {
 
 #include <stdio.h>
 
-#define AGILE_UPGRADE_USING_CRC_TAB_CONST
 // #define AGILE_UPGRADE_ENABLE_VERSION_COMPARE
 
 #define AGILE_UPGRADE_ENABLE_LOG
@@ -33,7 +32,7 @@ extern "C" {
 #define AGILE_UPGRADE_ENABLE_FASTLZ
 #define AGILE_UPGRADE_ENABLE_QUICKLZ
 
-//#define AGILE_UPGRADE_ENABLE_FAL
+// #define AGILE_UPGRADE_ENABLE_FAL
 #define AGILE_UPGRADE_ENABLE_FILE
 
 #ifdef __cplusplus

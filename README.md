@@ -50,13 +50,7 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 
 #### 基本配置
 
-1. 设置 `CRC` 表定义位置，开启则定义在 `Flash`，否则定义在 `RAM`
-
-    ```C
-    #define AGILE_UPGRADE_USING_CRC_TAB_CONST
-    ```
-
-2. 使能版本号比较,开启则比较固件版本，固件版本一致不进行升级
+1. 使能版本号比较，开启则比较固件版本，固件版本一致不进行升级
 
     ```C
     #define AGILE_UPGRADE_ENABLE_VERSION_COMPARE
@@ -170,7 +164,6 @@ RT-Thread online packages
     system packages   --->
         [*] agile_upgrade: Middleware for fast building bootloader.  --->
             [*]   Enable debug log output
-            [ ]   Enable crc32 table defined in flash
             [ ]   Enable AES decrypt
             [ ]   Enable fastlz decompress
             [*]   Enable quicklz decompress
