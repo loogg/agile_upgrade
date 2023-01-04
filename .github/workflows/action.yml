@@ -9,5 +9,6 @@ jobs:
       - name: Example Compile
         shell: bash
         run: |
+          gcc -v
           cd example
           make
