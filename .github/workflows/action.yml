@@ -15,7 +15,7 @@ on:
       - '**/ChangeLog.md'
 
 jobs:
-  example:
+  example-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -27,3 +27,74 @@ jobs:
           make clean
           make
           ./test
+
+  RT-Thread-build:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.legs.RTT_BSP }}
+    strategy:
+      fail-fast: false
+      matrix:
+       legs:
+         - {RTT_BSP: "stm32/stm32f407-atk-explorer", RTT_TOOL_CHAIN: "sourcery-arm"}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: RT-Thread/rt-thread
+          branches: 'master'
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+
+      - name: Install Tools
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get -qq install gcc-multilib libncurses5-dev scons
+          sudo python -m pip install --upgrade pip -qq
+          pip install requests -qq
+          git config --global http.postBuffer 524288000
+          python -c "import tools.menuconfig; tools.menuconfig.touch_env()"
+          echo "RTT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+          echo "RTT_CC=gcc" >> $GITHUB_ENV
+
+      - name: Install Arm ToolChains
+        if: ${{ matrix.legs.RTT_TOOL_CHAIN == 'sourcery-arm' && success() }}
+        shell: bash
+        run: |
+          wget -q https://github.com/RT-Thread/toolchains-ci/releases/download/v1.3/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
+          sudo tar xjf gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 -C /opt
+          /opt/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gcc --version
+          echo "RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-10-2020-q4-major/bin" >> $GITHUB_ENV
+
+      - name: Bsp Scons Compile
+        if: ${{ success() }}
+        shell: bash
+        env:
+          RTT_BSP: ${{ matrix.legs.RTT_BSP }}
+          RTT_TOOL_CHAIN: ${{ matrix.legs.RTT_TOOL_CHAIN }}
+        run: |
+          source ~/.env/env.sh
+          du -h --max-depth=1 | sort -nr
+          du -h --max-depth=1 bsp | sort -nr
+          du -s * | sort -nr
+          scons --pyconfig-silent -C bsp/$RTT_BSP
+          sed -i "s/# CONFIG_PKG_USING_AGILE_UPGRADE is not set/CONFIG_PKG_USING_AGILE_UPGRADE=y/g" bsp/$RTT_BSP/.config
+          scons --pyconfig-silent -C bsp/$RTT_BSP
+          sed -i "s/# CONFIG_AGILE_UPGRADE_ENABLE_LOG is not set/CONFIG_AGILE_UPGRADE_ENABLE_LOG=y/g" bsp/$RTT_BSP/.config
+          sed -i "s/# CONFIG_AGILE_UPGRADE_ENABLE_AES is not set/CONFIG_AGILE_UPGRADE_ENABLE_AES=y/g" bsp/$RTT_BSP/.config
+          sed -i "s/# CONFIG_AGILE_UPGRADE_ENABLE_FASTLZ is not set/CONFIG_AGILE_UPGRADE_ENABLE_FASTLZ=y/g" bsp/$RTT_BSP/.config
+          sed -i "s/# CONFIG_AGILE_UPGRADE_ENABLE_QUICKLZ is not set/CONFIG_AGILE_UPGRADE_ENABLE_QUICKLZ=y/g" bsp/$RTT_BSP/.config
+          sed -i "s/# CONFIG_AGILE_UPGRADE_ENABLE_FAL is not set/CONFIG_AGILE_UPGRADE_ENABLE_FAL=y/g" bsp/$RTT_BSP/.config
+          sed -i "s/# CONFIG_AGILE_UPGRADE_ENABLE_FILE is not set/CONFIG_AGILE_UPGRADE_ENABLE_FILE=y/g" bsp/$RTT_BSP/.config
+          sed -i "s/# CONFIG_AGILE_UPGRADE_ENABLE_VERSION_COMPARE is not set/CONFIG_AGILE_UPGRADE_ENABLE_VERSION_COMPARE=y/g" bsp/$RTT_BSP/.config
+          sed -i "s/# CONFIG_BSP_USING_ON_CHIP_FLASH is not set/CONFIG_BSP_USING_ON_CHIP_FLASH=y/g" bsp/$RTT_BSP/.config
+          scons --pyconfig-silent -C bsp/$RTT_BSP
+          cat bsp/$RTT_BSP/.config
+          cat bsp/$RTT_BSP/rtconfig.h
+          pushd bsp/$RTT_BSP && pkgs --update && popd
+          sed -i "17i if GetDepend(['RT_USING_FAL']):\r\    path += [cwd + '/ports/fal']" bsp/$RTT_BSP/board/SConscript
+          cat bsp/$RTT_BSP/board/SConscript
+          scons -C bsp/$RTT_BSP
