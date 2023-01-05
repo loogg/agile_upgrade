@@ -95,6 +95,6 @@ jobs:
           cat bsp/$RTT_BSP/.config
           cat bsp/$RTT_BSP/rtconfig.h
           pushd bsp/$RTT_BSP && pkgs --update && popd
-          sed -i "17i if GetDepend(['RT_USING_FAL']):\r\    path += [cwd + '/ports/fal']" bsp/$RTT_BSP/board/SConscript
+          sed -i "17i if GetDepend(['RT_USING_FAL']):\r\n    path += [cwd + '/ports/fal']" bsp/$RTT_BSP/board/SConscript
           cat bsp/$RTT_BSP/board/SConscript
           scons -C bsp/$RTT_BSP
