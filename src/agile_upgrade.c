@@ -373,7 +373,7 @@ int agile_upgrade_release(agile_upgrade_t *src_agu, agile_upgrade_t *dst_agu, ui
         if (rc != AGILE_UPGRADE_EOK) break;
         if (dst_agu->len > 0) {
             if (src_fw.raw_size + sizeof(agile_upgrade_fw_info_t) > dst_agu->len) {
-                LOG_E("Name[%s] len (%d) is smaller than (%d).", dst_agu->name, dst_agu->len,
+                LOG_E("Name[%s] len (%d) is smaller than (%lu).", dst_agu->name, dst_agu->len,
                       src_fw.raw_size + sizeof(agile_upgrade_fw_info_t));
                 rc = AGILE_UPGRADE_EFULL;
                 break;
