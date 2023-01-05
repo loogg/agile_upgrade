@@ -1,0 +1,29 @@
+name: Agile_Upgrade
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**/README.md'
+      - '**/ChangeLog.md'
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '**/README.md'
+      - '**/ChangeLog.md'
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Example Compile
+        shell: bash
+        run: |
+          cd example
+          make clean
+          make
+          ./test
