@@ -52,7 +52,7 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 
 1. 使能版本号比较，开启则比较固件版本，固件版本一致不进行升级
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_ENABLE_VERSION_COMPARE
     ```
 
@@ -60,13 +60,13 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 
 1. 使能日志输出
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_ENABLE_LOG
     ```
 
 2. 日志输出调用的接口
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_LOG_PRINTF printf
     ```
 
@@ -74,19 +74,19 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 
 1. 使能 AES256
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_ENABLE_AES
     ```
 
 2. AES256 初始化向量，16 个字符
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_AES_IV  "0123456789ABCDEF"
     ```
 
 3. AES256 密钥，32 个字符
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_AES_KEY "0123456789ABCDEF0123456789ABCDEF"
     ```
 
@@ -94,13 +94,13 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 
 1. 使能 fastlz
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_ENABLE_FASTLZ
     ```
 
 2. 使能 quicklz
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_ENABLE_QUICKLZ
     ```
 
@@ -108,13 +108,13 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 
 1. 使能 fal 后端
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_ENABLE_FAL
     ```
 
 2. 使能 file 后端
 
-    ```C
+    ```c
     #define AGILE_UPGRADE_ENABLE_FILE
     ```
 
@@ -124,7 +124,7 @@ Agile Upgrade 依赖 `agile_upgrade_config.h` 头文件，修改该头文件中�
 
 [MCU Demos](https://github.com/loogg/agile_upgrade_mcu_demos) 的 `MinimalistBoot` 示例提供了直接操作 `片内 Flash` 和 `SPI Flash` 后端实现，可作为参考。
 
-```C
+```c
 struct agile_upgrade_ops {
     int (*init)(agile_upgrade_t *agu);
     int (*read)(agile_upgrade_t *agu, int offset, uint8_t *buf, int size);
@@ -158,7 +158,7 @@ struct agile_upgrade_ops {
 
 在 `RT-Thread` 的包管理器中选中即可，不需要自行移植配置文件。
 
-```C
+```c
 
 RT-Thread online packages
     system packages   --->
@@ -179,7 +179,7 @@ RT-Thread online packages
 
 移植操作完成后，几行代码即可实现固件升级。
 
-```C
+```c
 #include <agile_upgrade.h>
 
 extern const struct agile_upgrade_ops agile_upgrade_file_ops;
@@ -203,7 +203,7 @@ int main(void) {
 
 - `agile_upgrade`
 
-  ```C
+  ```c
   struct agile_upgrade {
     const char *name;
     int len;
@@ -237,7 +237,7 @@ int main(void) {
 
 1. 固件校验
 
-    ```C
+    ```c
     int agile_upgrade_verify(agile_upgrade_t *agu, agile_upgrade_fw_info_t *fw_info, uint8_t is_tail);
     ```
 
@@ -249,7 +249,7 @@ int main(void) {
 
 2. 固件升级
 
-    ```C
+    ```c
     int agile_upgrade_release(agile_upgrade_t *src_agu, agile_upgrade_t *dst_agu, uint8_t is_erase);
     ```
 
@@ -265,7 +265,7 @@ int main(void) {
 
     - 步骤枚举
 
-      ```C
+      ```c
       typedef enum {
       AGILE_UPGRADE_STEP_INIT = 0,
       AGILE_UPGRADE_STEP_VERIFY,
@@ -277,7 +277,7 @@ int main(void) {
 
     - 错误码枚举
 
-      ```C
+      ```c
       typedef enum {
       AGILE_UPGRADE_EOK = 0,
       AGILE_UPGRADE_ERR = -1,
@@ -292,21 +292,21 @@ int main(void) {
 
     - 设置步骤钩子函数
 
-      ```C
+      ```c
       void agile_upgrade_set_step_hook(agile_upgrade_step_callback_t hook);
       typedef void (*agile_upgrade_step_callback_t)(int step);
       ```
 
     - 设置进度钩子函数
 
-      ```C
+      ```c
       void agile_upgrade_set_progress_hook(agile_upgrade_progress_callback_t hook);
       typedef void (*agile_upgrade_progress_callback_t)(uint32_t cur_size, uint32_t total_size);
       ```
 
     - 设置错误钩子函数
 
-      ```C
+      ```c
       void agile_upgrade_set_error_hook(agile_upgrade_error_callback_t hook);
       typedef void (*agile_upgrade_error_callback_t)(int step, int code);
       ```

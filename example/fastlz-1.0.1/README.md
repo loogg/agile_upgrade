@@ -24,10 +24,10 @@ FastLZ 是一个快速无损压缩库， 仅包含两个文件， 使用简单�
 ![](./doc/image/fastlz.jpg)
 
 ### 3.2 运行示例
-该示例为一个简单的文件压缩和解压的例程，需要依赖文件系统，用到的命令有两个` -c`和 `-d`， `-c`命令压缩一个文件到另一个文件，`-d`命令解压一个文件到另一个文件。   
-使用方式：  
-msh cmd 压缩： `fastlz_test -c /file.bin /file.cmprs.bin`  
-msh cmd 解压： `fastlz_test -d /file.cmprs.bin /file_dcmprs.bin`  
+该示例为一个简单的文件压缩和解压的例程，需要依赖文件系统，用到的命令有两个` -c`和 `-d`， `-c`命令压缩一个文件到另一个文件，`-d`命令解压一个文件到另一个文件。
+使用方式：
+msh cmd 压缩： `fastlz_test -c /file.bin /file.cmprs.bin`
+msh cmd 解压： `fastlz_test -d /file.cmprs.bin /file_dcmprs.bin`
 
     msh />fastlz_test -c /file.bin /file.cmprs.bin
     [fastlz]compress start : >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -46,7 +46,7 @@ msh cmd 解压： `fastlz_test -d /file.cmprs.bin /file_dcmprs.bin`
   对源码 `fastlz.c` 进行如下变动，移植官方代码的时候需要注意：
 
   1. 添加动态内存分配定义
-  ```C
+  ```c
 #include <rtthread.h>
 
 #define malloc     rt_malloc
@@ -54,11 +54,11 @@ msh cmd 解压： `fastlz_test -d /file.cmprs.bin /file_dcmprs.bin`
   ```
 
   2. 使用 `malloc` 为 `htab` 分配内存
-  ```C
+  ```c
 const flzuint8* htab[HASH_SIZE];
   ```
 替换为
-  ```C
+  ```c
 const flzuint8** htab = (const flzuint8**)malloc(sizeof(flzuint8*) * HASH_SIZE);
   ```
 
