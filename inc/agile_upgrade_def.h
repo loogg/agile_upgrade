@@ -40,28 +40,28 @@ extern "C" {
     do {                                             \
         AGILE_UPGRADE_LOG_PRINTF("\033[0m[D/AUG] "); \
         AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);       \
-        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");       \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\r\n");     \
     } while (0)
 
 #define LOG_I(...)                                    \
     do {                                              \
         AGILE_UPGRADE_LOG_PRINTF("\033[32m[I/AUG] "); \
         AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);        \
-        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");        \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\r\n");      \
     } while (0)
 
 #define LOG_W(...)                                    \
     do {                                              \
         AGILE_UPGRADE_LOG_PRINTF("\033[33m[W/AUG] "); \
         AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);        \
-        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");        \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\r\n");      \
     } while (0)
 
 #define LOG_E(...)                                    \
     do {                                              \
         AGILE_UPGRADE_LOG_PRINTF("\033[31m[E/AUG] "); \
         AGILE_UPGRADE_LOG_PRINTF(__VA_ARGS__);        \
-        AGILE_UPGRADE_LOG_PRINTF("\033[0m\n");        \
+        AGILE_UPGRADE_LOG_PRINTF("\033[0m\r\n");      \
     } while (0)
 #else
 #define LOG_D(...)

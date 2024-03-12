@@ -1,7 +1,10 @@
 name: RT-Thread_Packages_Test
 
 on:
-  [push, pull_request]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   pkgs-test:
