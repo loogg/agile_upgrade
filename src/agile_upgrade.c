@@ -41,6 +41,7 @@
     } while (0)
 
 static agile_upgrade_step_callback_t _step_hook = NULL;
+static agile_upgrade_verify_callback_t _verify_hook = NULL;
 static agile_upgrade_progress_callback_t _progress_hook = NULL;
 static agile_upgrade_error_callback_t _error_hook = NULL;
 
@@ -298,6 +299,8 @@ static int agile_upgrade_algo_write(agile_upgrade_t *agu, uint32_t *calc_crc, in
 
 void agile_upgrade_set_step_hook(agile_upgrade_step_callback_t hook) { _step_hook = hook; }
 
+void agile_upgrade_set_verify_hook(agile_upgrade_verify_callback_t hook) { _verify_hook = hook; }
+
 void agile_upgrade_set_progress_hook(agile_upgrade_progress_callback_t hook) {
     _progress_hook = hook;
 }
@@ -371,6 +374,10 @@ int agile_upgrade_release(agile_upgrade_t *src_agu, agile_upgrade_t *dst_agu, ui
         AGILE_UPGRADE_STEP_HOOK(step);
         rc = agile_upgrade_internal_verify(src_agu, &src_fw, 0);
         if (rc != AGILE_UPGRADE_EOK) break;
+        if (_verify_hook) {
+            rc = _verify_hook(&src_fw);
+            if (rc != AGILE_UPGRADE_EOK) break;
+        }
         if (dst_agu->len > 0) {
             if (src_fw.raw_size + sizeof(agile_upgrade_fw_info_t) > dst_agu->len) {
                 LOG_E("Name[%s] len (%d) is smaller than (%lu).", dst_agu->name, dst_agu->len,

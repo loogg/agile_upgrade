@@ -297,6 +297,13 @@ int main(void) {
       typedef void (*agile_upgrade_step_callback_t)(int step);
       ```
 
+    - 设置校验钩子函数
+
+      ```c
+      void agile_upgrade_set_verify_hook(agile_upgrade_verify_callback_t hook);
+      typedef int (*agile_upgrade_verify_callback_t)(agile_upgrade_fw_info_t *fw_info);
+      ```
+
     - 设置进度钩子函数
 
       ```c
