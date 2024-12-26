@@ -23,6 +23,6 @@
 
 2. 使用固件打包工具生成固件。固件打包工具在 Agile Upgrade 的 `tools` 路径下
 
-3. 执行命令 `./test ${file}.rbl`，解析完的固件存放在当前路径下的 `upgrade.bin` 中
+3. 执行命令 `./demo app.rbl app.bin`，解析完的固件存放在当前路径下的 `app.bin` 中
 
     ![run](./figures/run.png)
