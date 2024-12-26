@@ -18,15 +18,26 @@ jobs:
   example-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # If your document requires Git submodules, uncomment the next line
+          # submodules: true
+
+      - name: Install Tools
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install cmake
 
       - name: Example Compile
         shell: bash
         run: |
           cd example
-          make clean
-          make
-          ./test
+          cmake -B build
+          cmake --build build
+          cd build && ctest
 
   RT-Thread-build:
     runs-on: ubuntu-latest

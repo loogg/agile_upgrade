@@ -21,9 +21,9 @@ static void progress_hook(uint32_t cur_size, uint32_t total_size) {
 }
 
 int main(int argc, char *argv[]) {
-    const char *src_file = "./tools/app.rbl";
-    if (argc >= 2) {
-        src_file = argv[1];
+    if (argc < 3) {
+        printf("Usage: %s src_file dst_file\r\n", argv[0]);
+        return -1;
     }
 
     agile_upgrade_set_step_hook(step_hook);
@@ -32,12 +32,12 @@ int main(int argc, char *argv[]) {
 
     agile_upgrade_t src_agu = {0};
     src_agu.name = "src";
-    src_agu.user_data = src_file;
+    src_agu.user_data = argv[1];
     src_agu.ops = &agile_upgrade_file_ops;
 
     agile_upgrade_t dst_agu = {0};
     dst_agu.name = "dst";
-    dst_agu.user_data = "./app.bin";
+    dst_agu.user_data = argv[2];
     dst_agu.ops = &agile_upgrade_file_ops;
 
     int rc = agile_upgrade_release(&src_agu, &dst_agu, 0);
@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
     }
 
     printf("Written len: %u, total len: %u\r\n", _written_len, _total_len);
+    printf("Release success.\r\n");
 
     return 0;
 }

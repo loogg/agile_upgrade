@@ -60,6 +60,7 @@ doc/doxygen/output/*
 # Example
 example/test
 example/*.bin
+build
 
 # tools
 !tools/ota_packager/*

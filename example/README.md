@@ -4,7 +4,7 @@
 
 该示例提供使用 `RT-Thread` 固件打包工具生成固件的解析演示。
 
-`WSL` 或 `Linux` 下使用 `gcc` 可直接 `make` 编译，在电脑上运行测试程序。
+`WSL` 或 `Linux` 下使用 `cmake` 可直接编译，在电脑上运行测试程序。
 
 目录结构：
 
@@ -19,7 +19,7 @@
 
 ## 2、使用
 
-1. 命令行敲击 `make clean` 、 `make`
+1. 命令行敲击 `cmake -B build` 、 `cmake --build build`
 
 2. 使用固件打包工具生成固件。固件打包工具在 Agile Upgrade 的 `tools` 路径下
 

@@ -1,0 +1,43 @@
+#ifndef __COMMON_H
+#define __COMMON_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <stdint.h>
+
+/* AGILE UPGRADE */
+#include <stdio.h>
+
+#cmakedefine AGILE_UPGRADE_ENABLE_VERSION_COMPARE
+
+#cmakedefine AGILE_UPGRADE_ENABLE_LOG
+
+#define AGILE_UPGRADE_LOG_PRINTF printf
+
+#cmakedefine AGILE_UPGRADE_ENABLE_AES
+#ifdef AGILE_UPGRADE_ENABLE_AES
+#define AGILE_UPGRADE_AES_IV  "@AGILE_UPGRADE_AES_IV@"
+#define AGILE_UPGRADE_AES_KEY "@AGILE_UPGRADE_AES_KEY@"
+
+/* TINYCRYPT */
+#define TINY_CRYPT_AES
+#define TINY_CRYPT_AES_ROM_TABLES
+#endif
+
+#cmakedefine AGILE_UPGRADE_ENABLE_FASTLZ
+#cmakedefine AGILE_UPGRADE_ENABLE_QUICKLZ
+#ifdef AGILE_UPGRADE_ENABLE_QUICKLZ
+/* QUICKLZ */
+#define QLZ_COMPRESSION_LEVEL 3
+#endif
+
+// #define AGILE_UPGRADE_ENABLE_FAL
+#define AGILE_UPGRADE_ENABLE_FILE
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
